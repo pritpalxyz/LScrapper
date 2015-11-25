@@ -28,6 +28,7 @@ class LinkDinScrap():
 		self.fetchMainData()
 		self.fetchEducation()
 		self.fetchExperience()
+		self.fetchProject()
 
 	def declareXpaths(self):
 		self.Name = "//h1[@id='name']"
@@ -63,83 +64,97 @@ class LinkDinScrap():
 		print "************************************************************"
 		print "Extracting Name..."
 		self.nameOfUser = self.filterString(driver.find_element_by_xpath(self.Name).text)
-
 		print "Name Fetched ->",self.nameOfUser
 
 		print "************************************************************"
 
 		print "Extracting headline...."
-		self.userHeadline = self.filterString(driver.find_element_by_xpath(self.headline).text)
-		print "Headline Fetched -> ",self.userHeadline
-
+		try:
+			self.userHeadline = self.filterString(driver.find_element_by_xpath(self.headline).text)
+			print "Headline Fetched -> ",self.userHeadline
+		except:self.userHeadline = ''
 
 		print "************************************************************"
 
 
 		print "Extracting Locality...."
-		self.userLocality = self.filterString(driver.find_element_by_xpath(self.locality).text)
-		print "Locality Fetched -> ",self.userLocality
-
+		try:
+			self.userLocality = self.filterString(driver.find_element_by_xpath(self.locality).text)
+			print "Locality Fetched -> ",self.userLocality
+		except:
+			self.userLocality = ''
 		print "************************************************************"
 
 		print "Extracting Field...."
-		self.userField = self.filterString(driver.find_element_by_xpath(self.field).text)
-		print "Field Fetched -> ",self.userField
-
+		try:
+			self.userField = self.filterString(driver.find_element_by_xpath(self.field).text)
+			print "Field Fetched -> ",self.userField
+		except:self.userField = ''
 		print "************************************************************"
 
 		print "Extracting Current Company..."
-		self.userCurrentCompany = self.filterString(driver.find_element_by_xpath(self.currentCompany).text)
-		print "Current Company Fetched -> ",self.userCurrentCompany
-
+		try:
+			self.userCurrentCompany = self.filterString(driver.find_element_by_xpath(self.currentCompany).text)
+			print "Current Company Fetched -> ",self.userCurrentCompany
+		except:self.userCurrentCompany = ''
 		print "************************************************************"
 
 		print "Extracting Previous Company..."
-		self.userPreviousCompanyList = driver.find_elements_by_xpath(self.previosComapnies)
-		self.userPreviousCompany = ""
-		for content in self.userPreviousCompanyList:
-			self.userPreviousCompany = "%s | %s"%(self.userPreviousCompany,self.filterString(content.text))
-		print "Prevois Company Fetched  ->",self.userPreviousCompany
+		try:
+			self.userPreviousCompanyList = driver.find_elements_by_xpath(self.previosComapnies)
+			self.userPreviousCompany = ""
+			for content in self.userPreviousCompanyList:
+				self.userPreviousCompany = "%s | %s"%(self.userPreviousCompany,self.filterString(content.text))
+			print "Prevois Company Fetched  ->",self.userPreviousCompany
+		except:self.userPreviousCompany = ''
 
 		print "************************************************************"
 
 		print "Extracting User Main Education...."
-		self.userMainEducation = self.filterString(driver.find_element_by_xpath(self.education).text)
-		print "User Main Education Fetched -> ",self.userMainEducation
-
+		try:
+			self.userMainEducation = self.filterString(driver.find_element_by_xpath(self.education).text)
+			print "User Main Education Fetched -> ",self.userMainEducation
+		except:self.userMainEducation = ''
 		print "************************************************************"
 
 
 		print "Summary of User ....."
-		self.userSummary = self.filterString(driver.find_element_by_xpath(self.summary).text)
-		print "User Summary Fetched -> ",self.userSummary
+		try:
+			self.userSummary = self.filterString(driver.find_element_by_xpath(self.summary).text)
+			print "User Summary Fetched -> ",self.userSummary
+		except:self.userSummary = ''
 		print "************************************************************"
 		print "User Total Connections...."
-		self.userConnections = self.filterString(driver.find_element_by_xpath(self.connections).text)
-		print "User Total Connections Fetched -> ",self.userConnections
-
+		try:
+			self.userConnections = self.filterString(driver.find_element_by_xpath(self.connections).text)
+			print "User Total Connections Fetched -> ",self.userConnections
+		except:self.userConnections = ''
 	def fetchMainData(self):
 		driver = self.driver
 		try:driver.find_element_by_xpath("//li[@class='skill see-more']/label").click()
 		except:pass
 		time.sleep(2)
 		print "Extracting User Skills..."
-		self.userskills = driver.find_elements_by_xpath(self.skills)
-		self.userskillsStr = ""
-		for content in self.userskills:
-			self.userskillsStr = "%s | %s"%(self.userskillsStr,self.filterString(content.text))
-		print "User skilss Fetched  ->",self.userskillsStr
+		try:
+			self.userskills = driver.find_elements_by_xpath(self.skills)
+			self.userskillsStr = ""
+			for content in self.userskills:
+				self.userskillsStr = "%s | %s"%(self.userskillsStr,self.filterString(content.text))
+			print "User skilss Fetched  ->",self.userskillsStr
+		except:self.userskillsStr = ''
 		
 
 		print "************************************************************"
 
 		print "Languages Knows"
-		self.languagesKnow = driver.find_elements_by_xpath(self.languages)
-		self.userLanguagesKnow = ""
-		for content in self.languagesKnow:
-			self.userLanguagesKnow = "%s | %s"%(self.userLanguagesKnow,self.filterString(content.text))
+		try:
+			self.languagesKnow = driver.find_elements_by_xpath(self.languages)
+			self.userLanguagesKnow = ""
+			for content in self.languagesKnow:
+				self.userLanguagesKnow = "%s | %s"%(self.userLanguagesKnow,self.filterString(content.text))
 
-		print "User Languages Know Fetched -> ",self.userLanguagesKnow
+			print "User Languages Know Fetched -> ",self.userLanguagesKnow
+		except:self.userLanguagesKnow = ''
 		print "************************************************************"
 
 	def fetchEducation(self):
@@ -147,15 +162,17 @@ class LinkDinScrap():
 
 		print "************************************************************"
 		print "Fetching School Information  ...."
-		listOfEducations = driver.find_elements_by_xpath(self.EducationMain)
-		self.educationList = []
-		for educationContent in listOfEducations:
-			educationContent = self.filterString(educationContent.text)
-			educationContent = educationContent.split("\n")
-			makeDict = { 'school':educationContent[0],'course':educationContent[1],'year':educationContent[2] }
-			self.educationList.append(makeDict)
-		print "School Course Information Fetched -> ",self.educationList
-		self.educationList = str(json.dumps(self.educationList))
+		try:
+			listOfEducations = driver.find_elements_by_xpath(self.EducationMain)
+			self.educationList = []
+			for educationContent in listOfEducations:
+				educationContent = self.filterString(educationContent.text)
+				educationContent = educationContent.split("\n")
+				makeDict = { 'school':educationContent[0],'course':educationContent[1],'year':educationContent[2] }
+				self.educationList.append(makeDict)
+			print "School Course Information Fetched -> ",self.educationList
+			self.educationList = str(json.dumps(self.educationList))
+		except:self.educationList = ''
 		print "************************************************************"
 
 
@@ -164,16 +181,36 @@ class LinkDinScrap():
 		driver = self.driver
 		print "************************************************************"
 		print "Fetching Experience ....."
-		listOfExpericne = driver.find_elements_by_xpath("//li[@class='position']")
-		self.experinceList = []
-		for experienceContent in listOfExpericne:
-			experienceContent =  self.filterString(experienceContent.text)
-			experienceContent = experienceContent.split("\n")
-			makeDict = {'position':experienceContent[0],'company':experienceContent[1],'experince':experienceContent[2]}
-			self.experinceList.append(makeDict)
-		print "Experince Information Fetched ->",self.experinceList
-		self.experinceList = str(json.dumps(self.experinceList))
+		try:
+			listOfExpericne = driver.find_elements_by_xpath("//li[@class='position']")
+			self.experinceList = []
+			for experienceContent in listOfExpericne:
+				experienceContent =  self.filterString(experienceContent.text)
+				experienceContent = experienceContent.split("\n")
+				makeDict = {'position':experienceContent[0],'company':experienceContent[1],'experince':experienceContent[2]}
+				self.experinceList.append(makeDict)
+			print "Experince Information Fetched ->",self.experinceList
+			self.experinceList = str(json.dumps(self.experinceList))
+		except:self.experinceList = ''
 		print "*************************************************************"
+
+	def fetchProject(self):
+		driver = self.driver
+		print "***********************************************************"
+		print "Fetching Projects Delivered ........."
+		try:
+			listOfProjects = driver.find_elements_by_xpath("//li[@class='project']")
+			self.projecteContentList = []
+			for projecteContent in listOfProjects:
+				projecteContent =  self.filterString(projecteContent.text)
+				projecteContent = projecteContent.split("\n")
+				makeDict = {'projectName':projecteContent[0],'Time':projecteContent[1],'description':projecteContent[2]}
+				self.projecteContentList.append(makeDict)
+			print "Experince Information Fetched ->",self.projecteContentList
+			self.projecteContentList = str(json.dumps(self.projecteContentList))
+		except:self.projecteContentList = ''
+		print "***********************************************************"
+
 
 
 	def writeToFile(self):
@@ -181,7 +218,7 @@ class LinkDinScrap():
 		fileNamePrefix = fileNamePrefix.replace(" ","_")
 		fileName = "%s.csv"%(fileNamePrefix)
 		f = open(fileName,"w")
-		fields = ['Name','headline','Locality','Field','CurrentCompany','PreviousCompany','Main Education','Summary','Total Connections','User Skills','Language Speaks','Education','Experince']
+		fields = ['Name','headline','Locality','Field','CurrentCompany','PreviousCompany','Main Education','Summary','Total Connections','User Skills','Language Speaks','Education','Experince','Projects']
 		for tabName in fields:
 			f.write(tabName)
 			f.write(',')
@@ -211,6 +248,8 @@ class LinkDinScrap():
 		f.write(self.educationList)
 		f.write(',')
 		f.write(self.experinceList)
+		f.write(',')
+		f.write(self.projecteContentList)
 		f.close()
 
 
